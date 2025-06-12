@@ -3,469 +3,973 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技术教程视频平台</title>
-    <!-- 引入Tailwind CSS和Font Awesome -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Tailwind配置 -->
+    <title>专业教程视频平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#165DFF',
-                        secondary: '#0FC6C2',
-                        dark: '#1D2129',
-                        light: '#F2F3F5',
-                        bgGradientStart: '#f5f7fa',
-                        bgGradientEnd: '#e4ecfa'
-                    },
-                    fontFamily: {
-                        inter: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
+        (function() {
+            emailjs.init("uQ59WHxVkvNKHltc4");
+        })();
+    </script>
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --success: #2ecc71;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        
+        /* 视频展示区 */
+        .videos-section {
+            padding: 30px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .video-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(231, 76, 60, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .play-btn i {
+            color: white;
+            font-size: 24px;
+            margin-left: 5px;
+        }
+        
+        .play-btn:hover {
+            background: var(--accent);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .video-details {
+            padding: 20px;
+        }
+        
+        .video-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .video-description {
+            color: var(--light);
+            opacity: 0.9;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+            text-align: center;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 联系区域 */
+        .contact-section {
+            padding: 50px 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+        
+        .contact-method {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            min-width: 250px;
+            flex: 1;
+        }
+        
+        .contact-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 15px;
+            border-radius: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .contact-item i {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .contact-text {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .copy-btn:hover {
+            color: var(--accent);
+        }
+        
+        .qrcode-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        /* 微信二维码图片样式 */
+        .qrcode-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .qrcode-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 咨询表单 */
+        .consultation-section {
+            padding: 50px 0;
+        }
+        
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--accent);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            width: 100%;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 弹窗样式 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(50px);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .modal-btn {
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .modal-btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* 视频播放器 */
+        .video-player {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-player.active {
+            display: flex;
+        }
+        
+        .player-container {
+            width: 90%;
+            max-width: 900px;
+            position: relative;
+        }
+        
+        .player-container video {
+            width: 100%;
+            border-radius: 10px;
+            outline: none;
+        }
+        
+        .close-player {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .close-player:hover {
+            background: var(--accent);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .videos-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .modal-content {
+                padding: 20px;
             }
         }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
+        
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 20px;
             }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            
+            .contact-method {
+                min-width: 100%;
             }
-            .transition-transform-opacity {
-                transition-property: transform, opacity;
+            
+            .modal-btn {
+                padding: 12px;
+                font-size: 1rem;
             }
-            .backdrop-blur-sm {
-                backdrop-filter: blur(4px);
-            }
-            .play-button-mobile {
-                @apply absolute inset-0 flex items-center justify-center bg-black/30 rounded-t-xl;
-            }
-            .bg-gradient-custom {
-                background: linear-gradient(135deg, var(--tw-bg-gradient-start) 0%, var(--tw-bg-gradient-end) 100%);
-            }
+        }
+        
+        /* 通知 */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            background: var(--success);
+            color: white;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
         }
     </style>
 </head>
-<body class="font-inter bg-gradient-custom bg-gradient-to-br from-bgGradientStart to-bgGradientEnd text-dark">
-    <!-- 视频播放区 (默认隐藏) -->
-    <div id="video-player" class="fixed inset-0 z-50 bg-black flex items-center justify-center hidden">
-        <div class="relative w-full max-w-4xl px-4">
-            <button id="close-player" class="absolute -top-12 right-4 text-white text-2xl hover:text-gray-300 transition-colors">
-                <i class="fa fa-times"></i>
-            </button>
-            <div class="aspect-video bg-gray-900 rounded-lg overflow-hidden">
-                <!-- 视频播放器 -->
-                <video id="main-video" class="w-full h-full" controls poster="https://picsum.photos/id/0/800/450">
-                    <source src="" type="video/mp4">
-                    您的浏览器不支持视频播放
-                </video>
-            </div>
-            <div class="mt-4 bg-white rounded-lg p-4">
-                <h3 id="video-title" class="text-xl font-bold text-dark"></h3>
-                <div class="flex flex-wrap gap-2 mt-2">
-                    <span id="video-category" class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"></span>
-                    <span id="video-duration" class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full"></span>
-                </div>
+<body>
+    <!-- 初始弹窗 -->
+    <div class="modal" id="welcomeModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeWelcome">&times;</button>
+            <h2 class="modal-title">欢迎访问教程平台</h2>
+            <p style="text-align: center; margin-bottom: 25px;">请选择您需要的服务：</p>
+            <div class="modal-buttons">
+                <button class="modal-btn" id="watchVideoBtn">
+                    <i class="fas fa-play-circle"></i> 观看统计视频
+                </button>
+                <button class="modal-btn" id="downloadSoftwareBtn">
+                    <i class="fas fa-download"></i> 下载统计软件
+                </button>
             </div>
         </div>
     </div>
-
-    <!-- 视频教程区域 -->
-    <section id="videos" class="py-16">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark">精选视频教程</h2>
-                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
-                    我们精心制作的技术教程，涵盖各种专业技能，帮助你解决工作中的实际问题
-                </p>
-            </div>
-
-            <!-- 视频网格 -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 视频卡片 1 - 可复制此卡片添加更多视频 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 group" data-video-id="1">
-                    <div class="relative overflow-hidden rounded-t-xl">
-                        <img src="https://picsum.photos/id/0/600/400" alt="教程封面" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="play-button-mobile">
-                            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg text-primary hover:bg-primary hover:text-white transition-colors play-btn">
-                                <i class="fa fa-play"></i>
-                            </button>
-                        </div>
-                        <span class="absolute top-3 right-3 bg-primary text-white text-xs px-2 py-1 rounded-full">
-                            智能电脑版
-                        </span>
-                        <span class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                            05:30
-                        </span>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">智能生肖数字统计软件windows电脑升级版</h3>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center space-x-1 text-yellow-400">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-o"></i>
-                                <span class="text-gray-600 text-xs ml-1">4.8</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <a href="#" class="text-primary font-medium text-sm hover:underline flex items-center">
-                                <i class="fa fa-angle-right ml-1"></i>
-                            </a>
-                            <button class="px-3 py-1 bg-primary/10 text-primary rounded text-sm hover:bg-primary/20 transition-colors flex items-center download-btn">
-                                <i class="fa fa-download mr-1"></i> 下载软件
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 视频卡片 2 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 group" data-video-id="2">
-                    <div class="relative overflow-hidden rounded-t-xl">
-                        <img src="https://picsum.photos/id/180/600/400" alt="教程封面" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="play-button-mobile">
-                            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg text-primary hover:bg-primary hover:text-white transition-colors play-btn">
-                                <i class="fa fa-play"></i>
-                            </button>
-                        </div>
-                        <span class="absolute top-3 right-3 bg-secondary text-white text-xs px-2 py-1 rounded-full">
-                            极品电脑版
-                        </span>
-                        <span class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                            08:15
-                        </span>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">极品博赢智能生肖数字统计软件windows电脑升级版</h3>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center space-x-1 text-yellow-400">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                                <span class="text-gray-600 text-xs ml-1">4.9</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <a href="#" class="text-primary font-medium text-sm hover:underline flex items-center">
-                                <i class="fa fa-angle-right ml-1"></i>
-                            </a>
-                            <button class="px-3 py-1 bg-primary/10 text-primary rounded text-sm hover:bg-primary/20 transition-colors flex items-center download-btn">
-                                <i class="fa fa-download mr-1"></i> 下载软件
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 视频卡片 3 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 group" data-video-id="3">
-                    <div class="relative overflow-hidden rounded-t-xl">
-                        <img src="https://picsum.photos/id/96/600/400" alt="教程封面" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="play-button-mobile">
-                            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg text-primary hover:bg-primary hover:text-white transition-colors play-btn">
-                                <i class="fa fa-play"></i>
-                            </button>
-                        </div>
-                        <span class="absolute top-3 right-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
-                            智能手机版
-                        </span>
-                        <span class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                            02:45
-                        </span>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">智能生肖数字统计软件安卓手机升级版</h3>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center space-x-1 text-yellow-400">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <span class="text-gray-600 text-xs ml-1">5.0</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <a href="#" class="text-primary font-medium text-sm hover:underline flex items-center">
-                                <i class="fa fa-angle-right ml-1"></i>
-                            </a>
-                            <button class="px-3 py-1 bg-primary/10 text-primary rounded text-sm hover:bg-primary/20 transition-colors flex items-center download-btn">
-                                <i class="fa fa-download mr-1"></i> 下载软件
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 视频卡片 4 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 group" data-video-id="4">
-                    <div class="relative overflow-hidden rounded-t-xl">
-                        <img src="https://picsum.photos/id/160/600/400" alt="教程封面" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="play-button-mobile">
-                            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg text-primary hover:bg-primary hover:text-white transition-colors play-btn">
-                                <i class="fa fa-play"></i>
-                            </button>
-                        </div>
-                        <span class="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                            网络技术
-                        </span>
-                        <span class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                            48:20
-                        </span>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">安全教程 - 从入门到精通</h3>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center space-x-1 text-yellow-400">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-o"></i>
-                                <span class="text-gray-600 text-xs ml-1">4.7</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <a href="#" class="text-primary font-medium text-sm hover:underline flex items-center">
-                                <i class="fa fa-angle-right ml-1"></i>
-                            </a>
-                            <button class="px-3 py-1 bg-primary/10 text-primary rounded text-sm hover:bg-primary/20 transition-colors flex items-center download-btn">
-                                <i class="fa fa-download mr-1"></i> 下载软件
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 视频卡片 5 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 group" data-video-id="5">
-                    <div class="relative overflow-hidden rounded-t-xl">
-                        <img src="https://picsum.photos/id/119/600/400" alt="教程封面" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="play-button-mobile">
-                            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg text-primary hover:bg-primary hover:text-white transition-colors play-btn">
-                                <i class="fa fa-play"></i>
-                            </button>
-                        </div>
-                        <span class="absolute top-3 right-3 bg-primary text-white text-xs px-2 py-1 rounded-full">
-                            开发
-                        </span>
-                        <span class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                            62:10
-                        </span>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">高级教程 - 深入理解</h3>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center space-x-1 text-yellow-400">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                                <span class="text-gray-600 text-xs ml-1">4.2</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <a href="#" class="text-primary font-medium text-sm hover:underline flex items-center">
-                                <i class="fa fa-angle-right ml-1"></i>
-                            </a>
-                            <button class="px-3 py-1 bg-primary/10 text-primary rounded text-sm hover:bg-primary/20 transition-colors flex items-center download-btn">
-                                <i class="fa fa-download mr-1"></i> 下载软件
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 视频卡片 6 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 group" data-video-id="6">
-                    <div class="relative overflow-hidden rounded-t-xl">
-                        <img src="https://picsum.photos/id/237/600/400" alt="教程封面" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="play-button-mobile">
-                            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg text-primary hover:bg-primary hover:text-white transition-colors play-btn">
-                                <i class="fa fa-play"></i>
-                            </button>
-                        </div>
-                        <span class="absolute top-3 right-3 bg-secondary text-white text-xs px-2 py-1 rounded-full">
-                            设计
-                        </span>
-                        <span class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                            55:35
-                        </span>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">图像处理 - 高级技巧</h3>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center space-x-1 text-yellow-400">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-o"></i>
-                                <span class="text-gray-600 text-xs ml-1">4.6</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <a href="#" class="text-primary font-medium text-sm hover:underline flex items-center">
-                                <i class="fa fa-angle-right ml-1"></i>
-                            </a>
-                            <button class="px-3 py-1 bg-primary/10 text-primary rounded text-sm hover:bg-primary/20 transition-colors flex items-center download-btn">
-                                <i class="fa fa-download mr-1"></i> 下载软件
-                            </button>
-                        </div>
-                    </div>
-                </div>
+    
+    <!-- 选择视频弹窗 -->
+    <div class="modal" id="videoSelectModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeVideoSelect">&times;</button>
+            <h2 class="modal-title">请选择要观看的视频</h2>
+            <div class="modal-buttons">
+                <button class="modal-btn video-select" data-video="1">
+                    <i class="fas fa-video"></i> 第一款：智能统计电脑升级版
+                </button>
+                <button class="modal-btn video-select" data-video="2">
+                    <i class="fas fa-video"></i> 第二款：极品统计电脑升级版
+                </button>
+                <button class="modal-btn video-select" data-video="3">
+                    <i class="fas fa-video"></i> 第三款：元统计安卓手机版
+                </button>
             </div>
         </div>
-    </section>
-
-    <!-- 联系我们区域 -->
-    <section class="py-12 bg-white/70 backdrop-blur-sm">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-2xl font-bold text-dark mb-6">联系技术支持</h2>
-                <p class="text-gray-600 mb-8">
-                    如有任何技术问题或需要帮助，请通过以下方式联系我们的技术支持团队
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-md w-full sm:w-auto flex-1 max-w-xs">
-                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fa fa-weixin text-2xl text-green-500"></i>
+    </div>
+    
+    <!-- 选择软件弹窗 -->
+    <div class="modal" id="softwareSelectModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeSoftwareSelect">&times;</button>
+            <h2 class="modal-title">请选择要下载的软件</h2>
+            <div class="modal-buttons">
+                <button class="modal-btn software-select" data-software="1">
+                    <i class="fas fa-download"></i> 下载第一款：智能统计电脑升级版
+                </button>
+                <button class="modal-btn software-select" data-software="2">
+                    <i class="fas fa-download"></i> 下载第二款：极品统计电脑升级版
+                </button>
+                <button class="modal-btn software-select" data-software="3">
+                    <i class="fas fa-download"></i> 下载第三款：元统计安卓手机版
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 通知 -->
+    <div class="notification" id="notification">
+        复制成功！
+    </div>
+    
+    <!-- 视频播放器 -->
+    <div class="video-player" id="videoPlayer">
+        <div class="player-container">
+            <button class="close-player" id="closePlayer">&times;</button>
+            <video id="mainPlayer" controls>
+                <source src="" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+        </div>
+    </div>
+    
+    <!-- 页面内容 -->
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>专业教程视频平台</span>
+            </div>
+            <p class="tagline">提供高质量视频教程与专业软件下载服务</p>
+        </header>
+        
+        <section class="videos-section">
+            <h2 class="section-title">精选视频教程</h2>
+            <div class="videos-container">
+                <!-- 视频1 -->
+                <div class="video-card">
+                    <div class="video-thumbnail" data-video="1">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="视频教程一封面">
+                        <div class="play-btn">
+                            <i class="fas fa-play"></i>
                         </div>
-                        <h3 class="font-bold text-lg mb-2">微信咨询</h3>
-                        <p class="text-gray-600 mb-4">扫描二维码添加技术支持微信</p>
-                        <div class="bg-white p-2 rounded-lg shadow-sm inline-block mb-4">
-                            <img src="https://picsum.photos/200/200" alt="微信二维码" class="w-40 h-40 object-cover">
+                    </div>
+                    <div class="video-details">
+                        <h3 class="video-title">第一款：智能统计电脑升级版</h3>
+                        <p class="video-description">价格150元半年，200一年。支持windows电脑。</p>
+                        <a href="#" class="download-btn" data-software="1">
+                            <i class="fas fa-download"></i> 下载该视频软件
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 视频2 -->
+                <div class="video-card">
+                    <div class="video-thumbnail" data-video="2">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="视频教程二封面">
+                        <div class="play-btn">
+                            <i class="fas fa-play"></i>
                         </div>
-                        <p class="text-gray-500">技术支持微信号：888888</p>
+                    </div>
+                    <div class="video-details">
+                        <h3 class="video-title">第二款：极品统计电脑升级版</h3>
+                        <p class="video-description">200一年。支持windows电脑。</p>
+                        <a href="#" class="download-btn" data-software="2">
+                            <i class="fas fa-download"></i> 下载该视频软件
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 视频3 -->
+                <div class="video-card">
+                    <div class="video-thumbnail" data-video="3">
+                        <img src="https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="视频教程三封面">
+                        <div class="play-btn">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-details">
+                        <h3 class="video-title">第三款：元统计安卓手机版</h3>
+                        <p class="video-description">价格150元半年，200一年。支持windows电脑。</p>
+                        <a href="#" class="download-btn" data-software="3">
+                            <i class="fas fa-download"></i> 下载该软件软件
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        
+        <section class="contact-section">
+            <h2 class="section-title">联系我们</h2>
+            <div class="contact-container">
+                <div class="contact-method">
+                    <h3 class="contact-title">微信联系</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fab fa-weixin"></i>
+                            <span class="contact-text">WeChat123456789</span>
+                            <button class="copy-btn" data-text="WeChat123456789">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="qrcode-container">
+                        <!-- 替换为您的微信二维码图片链接 -->
+                        <img class="qrcode-img" src="https://ht.mc921.cn/tp/qq.png" alt="微信二维码">
+                        <p>扫码添加微信</p>
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <h3 class="contact-title">QQ联系</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fab fa-qq"></i>
+                            <span class="contact-text">251750007</span>
+                            <button class="copy-btn" data-text="251750007">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="qrcode-container">
+                        <!-- 替换为您的QQ二维码图片链接 -->
+                        <img class="qrcode-img" src="https://ht.mc921.cn/tp/qq.png" alt="QQ二维码">
+                        <p>扫码添加QQ</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="consultation-section">
+            <h2 class="section-title">软件定制开发咨询</h2>
+            <div class="form-container">
+                <h3 class="form-title">填写您的需求</h3>
+                <form id="consultationForm">
+                    <div class="form-group">
+                        <label for="name">您的姓名</label>
+                        <input type="text" id="name" class="form-control" placeholder="请输入姓名" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">联系电话</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="请输入手机号码" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="project">项目描述</label>
+                        <textarea id="project" class="form-control" placeholder="请详细描述您的开发需求..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> 提交咨询
+                    </button>
+                </form>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2023 专业教程视频平台 - 提供高质量教程与软件服务</p>
+            <p>本网站仅用于学习交流，所有资源来源于网络</p>
+        </footer>
+    </div>
 
-    <!-- JavaScript -->
     <script>
-        // 视频数据
-        const videoData = {
-            1: {
-                title: "智能生肖数字统计软件电脑升级版",
-                src: "https://ht.mc921.cn/xbtj.mp4",
-                poster: "https://picsum.photos/id/0/800/450",
-                category: "开发",
-                duration: "05:30",
-                downloadUrl: "https://share.feijipan.com/s/ef0z6pZV"
-            },
-            2: {
-                title: "极品博赢生肖数字统计软件电脑升级版",
-                src: "https://ht.mc921.cn/jptj.mp4",
-                poster: "https://picsum.photos/id/180/800/450",
-                category: "设计",
-                duration: "08:15",
-                downloadUrl: "https://share.feijipan.com/s/F60maE3S"
-            },
-            3: {
-                title: "智能生肖数字统计软件手机版",
-                src: "https://ht.mc921.cn/sjtj.mp4",
-                poster: "https://picsum.photos/id/96/800/450",
-                category: "办公软件",
-                duration: "02:45",
-                downloadUrl: "https://share.feijipan.com/s/E80hB4RT"
-            },
-            4: {
-                title: "安全教程 - 从入门到精通",
-                src: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_10mb.mp4",
-                poster: "https://picsum.photos/id/160/800/450",
-                category: "网络技术",
-                duration: "48:20",
-                downloadUrl: "https://pan.baidu.com/s/0246813579"
-            },
-            5: {
-                title: "高级教程 - 深入理解",
-                src: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_15mb.mp4",
-                poster: "https://picsum.photos/id/119/800/450",
-                category: "开发",
-                duration: "62:10",
-                downloadUrl: "https://pan.baidu.com/s/1472583690"
-            },
-            6: {
-                title: "图像处理 - 高级技巧",
-                src: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4",
-                poster: "https://picsum.photos/id/237/800/450",
-                category: "设计",
-                duration: "55:35",
-                downloadUrl: "https://pan.baidu.com/s/0369258147"
-            }
-        };
-
-        // 获取元素
-        const videoPlayer = document.getElementById('video-player');
-        const mainVideo = document.getElementById('main-video');
-        const videoTitle = document.getElementById('video-title');
-        const videoCategory = document.getElementById('video-category');
-        const videoDuration = document.getElementById('video-duration');
-        const closePlayer = document.getElementById('close-player');
-        const playButtons = document.querySelectorAll('.play-btn');
-        const downloadButtons = document.querySelectorAll('.download-btn');
-
+        // 页面加载完成后显示欢迎弹窗
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('welcomeModal').classList.add('active');
+            }, 1000);
+            
+            // 初始化事件监听器
+            initEventListeners();
+        });
+        
+        // 初始化所有事件监听器
+        function initEventListeners() {
+            // 关闭欢迎弹窗
+            document.getElementById('closeWelcome').addEventListener('click', function() {
+                document.getElementById('welcomeModal').classList.remove('active');
+            });
+            
+            // 观看视频按钮
+            document.getElementById('watchVideoBtn').addEventListener('click', function() {
+                document.getElementById('welcomeModal').classList.remove('active');
+                setTimeout(() => {
+                    document.getElementById('videoSelectModal').classList.add('active');
+                }, 300);
+            });
+            
+            // 下载软件按钮
+            document.getElementById('downloadSoftwareBtn').addEventListener('click', function() {
+                document.getElementById('welcomeModal').classList.remove('active');
+                setTimeout(() => {
+                    document.getElementById('softwareSelectModal').classList.add('active');
+                }, 300);
+            });
+            
+            // 关闭视频选择弹窗
+            document.getElementById('closeVideoSelect').addEventListener('click', function() {
+                document.getElementById('videoSelectModal').classList.remove('active');
+            });
+            
+            // 关闭软件选择弹窗
+            document.getElementById('closeSoftwareSelect').addEventListener('click', function() {
+                document.getElementById('softwareSelectModal').classList.remove('active');
+            });
+            
+            // 选择视频
+            document.querySelectorAll('.video-select').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const videoNum = this.getAttribute('data-video');
+                    document.getElementById('videoSelectModal').classList.remove('active');
+                    playVideo(videoNum);
+                });
+            });
+            
+            // 选择软件
+            document.querySelectorAll('.software-select').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const softwareNum = this.getAttribute('data-software');
+                    document.getElementById('softwareSelectModal').classList.remove('active');
+                    downloadSoftware(softwareNum);
+                });
+            });
+            
+            // 通过缩略图播放视频
+            document.querySelectorAll('.video-thumbnail').forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    const videoNum = this.getAttribute('data-video');
+                    playVideo(videoNum);
+                });
+            });
+            
+            // 下载按钮
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const softwareNum = this.getAttribute('data-software');
+                    downloadSoftware(softwareNum);
+                });
+            });
+            
+            // 关闭视频播放器
+            document.getElementById('closePlayer').addEventListener('click', function() {
+                document.getElementById('videoPlayer').classList.remove('active');
+                document.getElementById('mainPlayer').pause();
+            });
+            
+            // 复制联系方式
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const text = this.getAttribute('data-text');
+                    copyToClipboard(text);
+                });
+            });
+            
+            // 提交咨询表单
+            document.getElementById('consultationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitConsultation();
+            });
+        }
+        
         // 播放视频
-        playButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const videoId = button.closest('.group').dataset.videoId;
-                const video = videoData[videoId];
-                
-                if (video) {
-                    mainVideo.src = video.src;
-                    mainVideo.poster = video.poster;
-                    videoTitle.textContent = video.title;
-                    videoCategory.textContent = video.category;
-                    videoDuration.textContent = video.duration;
-                    
-                    // 显示视频播放器并开始播放
-                    videoPlayer.classList.remove('hidden');
-                    mainVideo.load();
-                    mainVideo.play();
-                    
-                    // 防止页面滚动
-                    document.body.style.overflow = 'hidden';
-                }
+        function playVideo(videoNum) {
+            // 在实际应用中，这里应该是您的视频URL
+            const videoSources = {
+                '1': 'https://ht.mc921.cn/xbtj.mp4',
+                '2': 'https://ht.mc921.cn/jptj.mp4',
+                '3': 'https://ht.mc921.cn/sjtj.mp4'
+            };
+            
+            const player = document.getElementById('mainPlayer');
+            player.src = videoSources[videoNum];
+            player.load();
+            
+            document.getElementById('videoPlayer').classList.add('active');
+        }
+        
+        // 下载软件
+        function downloadSoftware(softwareNum) {
+            // 在实际应用中，这里应该是您的下载链接
+            const downloadLinks = {
+                '1': 'https://share.feijipan.com/s/ef0z6pZV',
+                '2': 'https://share.feijipan.com/s/F60maE3S',
+                '3': 'https://share.feijipan.com/s/E80hB4RT'
+            };
+            
+            // 在新标签页打开下载链接
+            window.open(downloadLinks[softwareNum], '_blank');
+        }
+        
+        // 复制到剪贴板
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('复制成功！');
+            }).catch(err => {
+                showNotification('复制失败，请手动复制');
+                console.error('复制失败:', err);
             });
-        });
-
-        // 关闭视频播放器
-        closePlayer.addEventListener('click', () => {
-            videoPlayer.classList.add('hidden');
-            mainVideo.pause();
-            document.body.style.overflow = 'auto';
-        });
-
-        // 点击视频播放器外部关闭
-        videoPlayer.addEventListener('click', (e) => {
-            if (e.target === videoPlayer) {
-                videoPlayer.classList.add('hidden');
-                mainVideo.pause();
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // 下载按钮
-        downloadButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                const videoId = button.closest('.group').dataset.videoId;
-                const downloadUrl = videoData[videoId].downloadUrl;
-                
-                // 打开网盘下载链接
-                window.open(downloadUrl, '_blank');
+        }
+        
+        // 显示通知
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 提交咨询表单
+        function submitConsultation() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const project = document.getElementById('project').value;
+            
+            // 使用EmailJS发送邮件
+            emailjs.send('service_wlfjl2q', 'template_re4o98a', {
+                from_name: name,
+                phone: phone,
+                message: project
+            }).then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                showNotification('咨询提交成功！我们会尽快联系您');
+                document.getElementById('consultationForm').reset();
+            }, function(error) {
+                console.log('FAILED...', error);
+                showNotification('提交失败，请稍后再试');
             });
-        });
+        }
     </script>
 </body>
-</html>    
+</html>
