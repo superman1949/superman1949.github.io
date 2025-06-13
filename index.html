@@ -950,13 +950,13 @@
             }, 3000);
         }
         
-        // 提交咨询表单
+        // 提交咨询表
         function submitConsultation() {
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
             const project = document.getElementById('project').value;
             
-            // 使用EmailJS发送邮件
+            // 使用EmailJS发送
             emailjs.send('service_wlfjl2q', 'template_re4o98a', {
                 from_name: name,
                 phone: phone,
